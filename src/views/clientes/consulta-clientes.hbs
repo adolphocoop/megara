@@ -1,0 +1,26 @@
+<div class="row mt-5">
+    {{#each clientes}}
+    <div class="col-md-3">
+        <div class="card text-dark bg-light border-info mb-3">
+            <div class="card-header">
+                <h4 class="card-title">
+                    {{nombre}} {{apellidos}}
+                    <a href="/clientes/edit:{{_id}}"><i class="fas fa-edit m-2"></i></a>
+                    <a href="/clientes/delete:"><i class="fas fa-trash"></i></a>
+                </h4>
+            </div>
+            <div class="card-body">
+                <p class="font-weight-bold">Correo: {{email}}</p>
+                <p class="font-weight-bold">Telefono: {{telefono}}</p>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="card mx-auto">
+        <div class="card-body">
+            <p class="lead">No hay clientes en la base de datos.</p>
+            <a href="/clientes/add" class="btn btn-success btn-block">Registrar cliente</a>
+        </div>
+    </div>
+    {{/each}}
+</div>
