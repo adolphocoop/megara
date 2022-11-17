@@ -11,7 +11,7 @@ const flash = require('connect-flash');
 
 
 //Configuraciones
-app.set('puerto', process.env.PORT || 4000)
+app.set('puerto', process.env.PORT || 3000)
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', engine({
      defaultLayout:'main',

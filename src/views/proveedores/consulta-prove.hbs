@@ -1,25 +1,26 @@
 <div class="row mt-5">
-    {{#each clientes}}
+    {{#each proveedores }}
     <div class="col-md-3">
         <div class="card text-dark bg-light border-success mb-3">
             <div class="card-header">
                 <h4 class="card-title">
-                    {{nombre}} {{apellidos}}
-                    <a href="/clientes/edit:{{_id}}"><i class="fas fa-edit m-2"></i></a>
-                    <a href="/clientes/delete:"><i class="fas fa-trash"></i></a>
+                    {{nombre}}
+                    <a href="#"><i class="fas fa-edit m-2"></i></a>
+                    <a href="#"><i class="fas fa-trash"></i></a>
                 </h4>
             </div>
             <div class="card-body">
                 <p class="font-weight-bold">Correo: {{email}}</p>
                 <p class="font-weight-bold">Telefono: {{telefono}}</p>
+                <p class="font-weight-bold">Ciudad: {{ciudad}}</p>
             </div>
         </div>
     </div>
     {{else}}
     <div class="card mx-auto">
         <div class="card-body">
-            <p class="lead">No hay clientes en la base de datos.</p>
-            <a href="/clientes/add" class="btn btn-success btn-block">Registrar cliente</a>
+            <p class="lead">No hay Proveedores en la base de datos.</p>
+            <a href="/prove/add" class="btn btn-success btn-block">Registrar Proveedor</a>
         </div>
     </div>
     {{/each}}

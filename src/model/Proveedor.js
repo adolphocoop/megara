@@ -2,12 +2,8 @@ const mongoose =require('mongoose');
 const { Schema } = mongoose;
 
 
-const ProveedorSchema = new Schema ({
+const ProveedoresSchema = new Schema ({
      nombre:{
-        type: String,
-        required: true
-     },
-     apellidos:{
         type: String,
         required: true
      },
@@ -31,4 +27,4 @@ const ProveedorSchema = new Schema ({
      
 });
 
-module.exports = mongoose.model('Proveedor', ProveedorSchema);
+module.exports = mongoose.model('Proveedor', ProveedoresSchema);
