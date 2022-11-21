@@ -1,0 +1,32 @@
+<div class="row">
+{{#each productos }}
+<div class="col-md-3">
+  <div class="card text-dark bg-light border-info mt-3">
+    <div class="card-header">
+        <h4 class="card-title">
+            {{proveedor}}
+            <a href="/products/edit:{{_id}}"><i class="fas fa-edit m-2"></i></a>
+          <a href="/products/delete:{{_id}}"><i class="fas fa-trash m-2"></i></a>
+        </h4>
+    </div>
+    <div class="card-body text-center font-weight-bold">
+        <p>{{nombre}}</p>
+         <p>{{descripcion}}</p>
+          <p>{{tipo}}</p>
+          
+
+    </div>
+  
+  </div>
+</div>
+{{else}}
+<div class="card mx-auto mt-5">
+    <div class="card-body">
+        <p class="lead">No hay productos almacenados.</p>
+        <a href="/products/add" class="btn btn-primary btn-block">Crea un nuevo producto!</a>
+    </div>
+</div>
+{{/each}}
+
+
+</div>
