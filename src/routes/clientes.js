@@ -144,8 +144,8 @@ router.get('/clientes/delete:id', async function(request, response){
       _id = _id.substring(1, len);
 
       const cliente = await Cliente.findByIdAndDelete(_id);
-      request.flash('success_msg', 'Cliente eliminado')
-      response.redirect('/clietes');
+      request.flash('success_msg', 'Cliente ha sido eliminado correctamente')
+      response.redirect('/clientes');
 
    } catch (err){
       response.send(404);

@@ -125,6 +125,18 @@ router.put('/proves/editar-prove/:id', async function(request, response){
                   response.redirect('/error')
                  })
    }
+});
+router.get('/proves/delete:id', async function(request, response){
+   try{
+      var _id = request.params.id;
+      var len = request.params.id.length;
+      _id = _id.substring(1, len);
+      const proveedor = await Proveedor.findByIdAndDelete(_id);
+      response.redirect('/proves/');
+
+   }catch(err){
+      response.send(404);
+   }
 })
 
 module.exports = router;
