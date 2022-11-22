@@ -2,8 +2,9 @@ const express = require('express');
 const Productos = require('../model/Productos');
 const router = express.Router();
 const Producto = require('../model/Productos')
+const { isAuthenticated } = require('../helpers/auth');
 
-router.get('/products', async function(request, response){
+router.get('/products', isAuthenticated, async function(request,response){
     //response.send('Productos de la base de datos');
 
     await Productos.find({}).lean().sort({fecha: 'desc'})
@@ -20,11 +21,11 @@ router.get('/products', async function(request, response){
 
 });//Obtener los productos
 
-router.get('/products/add', function(request, response){
+router.get('/products/add', isAuthenticated, function(request, response){
     response.render('productos/crear-producto')
 
 });
-router.post('/productos/crear-producto', async function(request, response){
+router.post('/productos/crear-producto', isAuthenticated, async function(request, response){
     //console.log(request.body);
     //response.send('OK')
 
@@ -70,7 +71,7 @@ if (errores.length > 0){
 
 });
 //Ruta para editar producto
-router.get('/products/edit:id', async function(request, response){
+router.get('/products/edit:id', isAuthenticated, async function(request, response){
     try{
         var _id = request.params.id;
         var len = request.params.id.length;
@@ -90,7 +91,7 @@ router.get('/products/edit:id', async function(request, response){
 
     }
 });
-router.put('/productos/editar-producto/:id', async function (request, response){
+router.put('/productos/editar-producto/:id',isAuthenticated, async function (request, response){
     const {proveedor, nombre, descripcion, tipo} = request.body;
     const _id = request.params.id
     const errores = [];
@@ -130,7 +131,7 @@ router.put('/productos/editar-producto/:id', async function (request, response){
 });//Fin de guarda producto
 
 //Ruta para eliminar
-router.get('/products/delete:id', async function(request, response){
+router.get('/products/delete:id',isAuthenticated, async function(request, response){
     try{
         var _id = request.params.id;
         var len = request.params.id.length;

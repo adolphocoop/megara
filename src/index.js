@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express();
-require('./database')
+require('./database');
+require('./config/passport');
 const path = require('path');
 const { engine } = require('express-handlebars');
 const methodoverride = require('method-override');
 const session = require ('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
 
 //Inicializaciones 
 
@@ -36,12 +38,16 @@ app.use(session({
      resave: true,
      saveUninitialized: true 
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 
 //Variables Globales
 app.use(function(request, response, next){
  response.locals.success_msg = request.flash('success_msg')
  response.locals.error_msg = request.flash('error_msg');
+ response.locals.error= request.flash('error')
+ response.locals.usuario =request.user || null;
  next();
 })
 
