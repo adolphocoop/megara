@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const Proveedor = require('../model/Proveedor');
+const { isAuthenticated } = require('../helpers/auth');
 
 //Agregar proveedor
-router.get('/prove/add', function (request, response){
+router.get('/prove/add', isAuthenticated, function (request, response){
     response.render('proveedores/new-prove')
     //response.send('Agregar cliente')
 
 });
 
 
-router.get('/proves', async function (request, response){
+router.get('/proves', isAuthenticated, async function (request, response){
    //response.send('Proveedores en la base de datos')
    await Proveedor.find({}).lean().sort({fecha: 'desc'})
                   .then((proveedores)=>{
@@ -24,7 +25,7 @@ router.get('/proves', async function (request, response){
 });
 
 
-router.post('/proveedores/new-prove', async function(request, response){
+router.post('/proveedores/new-prove',isAuthenticated, async function(request, response){
   const {nombre, email, telefono, ciudad } =request.body;
   const errores = [];
   if(!nombre){
@@ -64,7 +65,7 @@ router.post('/proveedores/new-prove', async function(request, response){
      //response.send('OK')
   }
 });
-router.get('/proves/edit:id', async function(request, response){
+router.get('/proves/edit:id',isAuthenticated, async function(request, response){
    try{
       var _id = request.params.id;
       var len =request.params.id.length;
@@ -86,7 +87,7 @@ router.get('/proves/edit:id', async function(request, response){
    }
 });// Fin de editar al proveedor
 
-router.put('/proves/editar-prove/:id', async function(request, response){
+router.put('/proves/editar-prove/:id',isAuthenticated, async function(request, response){
    const {nombre, email, telefono, ciudad} = request.body;
    const _id = request.params.id
    const errores = [];
@@ -126,7 +127,7 @@ router.put('/proves/editar-prove/:id', async function(request, response){
                  })
    }
 });
-router.get('/proves/delete:id', async function(request, response){
+router.get('/proves/delete:id',isAuthenticated, async function(request, response){
    try{
       var _id = request.params.id;
       var len = request.params.id.length;

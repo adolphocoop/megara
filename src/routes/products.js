@@ -29,7 +29,7 @@ router.post('/productos/crear-producto', isAuthenticated, async function(request
     //console.log(request.body);
     //response.send('OK')
 
-const {proveedor, nombre, descripcion, tipo }= request.body;
+const {proveedor, nombre, descripcion, tipo, precio }= request.body;
 const errores = [];
 if(!proveedor){
     errores.push({text: 'Selecciona al proveedor'});
@@ -43,16 +43,20 @@ if(!descripcion){
 if(!tipo){
     errores.push({text: 'Ingresa el tipo por favor!'})
 }
+if(!precio){
+    errores.push({text: 'Ingresa el Precio'})
+}
 if (errores.length > 0){
     response.render('productos/crear-producto',{
         errores,
         proveedor,
         nombre,
         descripcion,
-        tipo
+        tipo,
+        precio
     })
 } else{
-    const nuevoProducto = new Producto({proveedor, nombre, descripcion, tipo});
+    const nuevoProducto = new Producto({proveedor, nombre, descripcion, tipo, precio});
     await nuevoProducto.save()//await guarda en la base de datos de manera asincrona
                        .then(()=>{
                         request.flash('success_msg', 'Producto agregado de manera exitosa');
@@ -83,6 +87,7 @@ router.get('/products/edit:id', isAuthenticated, async function(request, respons
         nombre= producto.nombre;
         descripcion= producto.descripcion;
         tipo = producto.tipo
+        precio = producto.precio
         response.render('productos/editar-producto',
                         {proveedor, nombre, descripcion, tipo, _id})
     } catch (error) {
@@ -92,7 +97,7 @@ router.get('/products/edit:id', isAuthenticated, async function(request, respons
     }
 });
 router.put('/productos/editar-producto/:id',isAuthenticated, async function (request, response){
-    const {proveedor, nombre, descripcion, tipo} = request.body;
+    const {proveedor, nombre, descripcion, tipo, precio} = request.body;
     const _id = request.params.id
     const errores = [];
     if(!proveedor){
@@ -107,6 +112,9 @@ router.put('/productos/editar-producto/:id',isAuthenticated, async function (req
     if(!tipo){
         errores.push({text: 'Por favor inserta el tipo'})
     }
+    if(!precio){
+        errores.push({text: 'Por favor inserta el precio'})
+    }
     if(errores.length > 0 ){
         response.render('productos/editar-producto',{
             errores,
@@ -114,11 +122,12 @@ router.put('/productos/editar-producto/:id',isAuthenticated, async function (req
             nombre,
             descripcion,
             tipo,
+            precio,
             _id
         })
     }else{
         await Producto.findByIdAndUpdate(_id,
-            {proveedor, nombre, descripcion, tipo})
+            {proveedor, nombre, descripcion, tipo, precio})
              .then(()=>{
                 request.flash('success_msg', 'Producto actualizado de manera exitosa');
                 response.redirect('/products');

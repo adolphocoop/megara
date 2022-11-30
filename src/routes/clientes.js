@@ -2,14 +2,15 @@ const { response } = require('express');
 const express = require('express');
 const router = express.Router();
 const Cliente = require('../model/Clientes');
+const { isAuthenticated } = require('../helpers/auth');
 
-router.get('/cliente/add', function (request, response){
+router.get('/cliente/add',isAuthenticated, function (request, response){
     response.render('clientes/nuevo-cliente')
     //response.send('Agregar cliente')
 
 });
 //obtener clientes
-router.get('/clientes', async function(request, response){
+router.get('/clientes',isAuthenticated, async function(request, response){
     //response.send("Clientes de la base de datos")
     await Cliente.find({}).lean().sort({fecha: 'desc'})
                 .then((clientes) =>{
@@ -27,7 +28,7 @@ router.get('/clientes', async function(request, response){
 
 
 
-router.post('/clientes/nuevo-cliente', async function(request, response){
+router.post('/clientes/nuevo-cliente',isAuthenticated, async function(request, response){
    // console.log(request.body);
     //response.send("OK")
  const {nombre, apellidos, email, telefono} =request.body;
@@ -74,7 +75,7 @@ router.post('/clientes/nuevo-cliente', async function(request, response){
 });
 //Editar clientes
 
-router.get('/clientes/edit:id', async function(request, response){
+router.get('/clientes/edit:id',isAuthenticated, async function(request, response){
 
     try{
         var _id = request.params.id;
@@ -98,7 +99,7 @@ router.get('/clientes/edit:id', async function(request, response){
 })//Fin de ruta editar
 
 //Ruta para guardar cliente editado
-router.put('/clientes/editar-cliente/:id', async function(request, response){
+router.put('/clientes/editar-cliente/:id',isAuthenticated, async function(request, response){
    const {nombre, apellidos, email, telefono } = request.body;
    const _id = request.params.id
    const errores = [];
@@ -137,7 +138,7 @@ router.put('/clientes/editar-cliente/:id', async function(request, response){
 });
 //Ruta para eliminar clientes
 
-router.get('/clientes/delete:id', async function(request, response){
+router.get('/clientes/delete:id',isAuthenticated, async function(request, response){
    try{
       var _id = request.params.id;
       var len = request.params.id.length;

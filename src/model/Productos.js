@@ -19,6 +19,10 @@ const ProductosSchema = new Schema ({
         type: String,
         required: true
      },
+     precio:{
+      type: String,
+      required: true
+     },
      fecha:{
         type: Date,
         default: Date.now
